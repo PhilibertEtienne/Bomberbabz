@@ -15,7 +15,9 @@
   let floorColor = '#40e355';
   let softBlockColor = '#8a6a37'
   let playerColor ='#03a9fc'
-  let bombColor ='#000000'
+  let flameColor ='#e0020d'
+  let moreBombColor ='#2f2f91'
+  let moreSpeedColor ='#f7df23'
   let bomberman
 
   const DIRECTION_RIGHT = 4;
@@ -49,13 +51,24 @@ let drawWalls = () => {
         // Draw floor
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, floorColor);
       }
+       else if (map[i][j] === 5) {
+        // Draw floor
+        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, flameColor);
+      }
+        else if (map[i][j] === 6) {
+        // Draw floor
+        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreBombColor);
+      }
+       else if (map[i][j] === 7) {
+        // Draw floor
+        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreSpeedColor);
+      }
     }
   }
-
   // Draw bombs
   for (let i = 0; i < bombs.length; i++) {
     const bomb = bombs[i];
-    bomb.draw();
+    bomb.drawBomb();
   }
 };
 
@@ -78,7 +91,7 @@ let drawWalls = () => {
       case "ArrowRight":
         bomberman.direction = DIRECTION_RIGHT;
         break;
-      case "Space":
+      case " ":
         bomberman.placeBomb();
 
         break;
@@ -98,8 +111,8 @@ let drawWalls = () => {
 
   let gameLoop =() => {
     update()
-    draw()
     updateBombs();
+    draw()
   }
 
   let update =()=>{
@@ -113,8 +126,7 @@ let drawWalls = () => {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
     createRect(0, 0, canvas.width, canvas.height, "black");
     drawWalls();
-    bomberman.draw();
-    
+    bomberman.drawBomberman();
   };
   
 
@@ -131,6 +143,10 @@ let drawWalls = () => {
       if (bomb.timer <= 0) {
         bomb.explode();
         bombs.splice(i, 1);
-        i--;}
+        i--;
+      // Restore bomb count
+      bomberman.bombCount += 1;
+
+        }
       }
     }
