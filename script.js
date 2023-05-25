@@ -52,15 +52,15 @@ let drawWalls = () => {
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, floorColor);
       }
        else if (map[i][j] === 5) {
-        // Draw floor
+        // Draw flame
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, flameColor);
       }
         else if (map[i][j] === 6) {
-        // Draw floor
+        // Draw Bomb
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreBombColor);
       }
        else if (map[i][j] === 7) {
-        // Draw floor
+        // Draw Speed
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreSpeedColor);
       }
     }
@@ -93,14 +93,14 @@ let drawWalls = () => {
         break;
       case " ":
         bomberman.placeBomb();
-
         break;
       default:
-        return; // Ignore other keys
+        return;
     }
-  
+    
     // Call the move function to update the Bomberman's position
     bomberman.move();
+    bomberman.takeObject();
     // Call the draw function to update the display
     draw();
   }
@@ -115,6 +115,12 @@ let drawWalls = () => {
     draw()
   }
 
+
+    let gameOver = () => {
+      if ((bomberman.life == 0)){
+
+      }
+    }
   let update =()=>{
     //todo
   }
@@ -124,7 +130,7 @@ let drawWalls = () => {
       bomberman = new Bomberman(0,0);
     }
     canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
-    createRect(0, 0, canvas.width, canvas.height, "black");
+    // createRect(0, 0, canvas.width, canvas.height, "black");
     drawWalls();
     bomberman.drawBomberman();
   };
@@ -141,12 +147,30 @@ let drawWalls = () => {
       bomb.timer -= 1 / fps;
   
       if (bomb.timer <= 0) {
-        bomb.explode();
+        bomb.explode(bomberman);
         bombs.splice(i, 1);
         i--;
       // Restore bomb count
       bomberman.bombCount += 1;
-
         }
       }
+    }
+
+    function resetGame() {
+      map = [ 
+        [0,0,1,0,1,1,0,0,0,1,1,1,1,0,0],
+        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
+        [1,1,1,1,0,1,1,1,1,1,1,0,0,1,1],
+        [1,2,1,2,0,2,1,2,1,2,1,2,1,2,1],
+        [1,1,1,1,1,1,0,0,0,1,1,1,1,0,0],
+        [1,2,1,2,1,2,1,2,1,2,0,2,1,2,1],
+        [1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
+        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
+        [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
+      ];
+      bomberman = new Bomberman (0,0);
+      bomberman.range = 1;
+      bomberman.bombCount = 1;
+      bombs =[];
+      let gameInterval = setInterval(gameLoop,1000/fps)
     }

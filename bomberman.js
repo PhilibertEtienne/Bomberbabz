@@ -3,7 +3,10 @@ class Bomberman {
         this.x = x;
         this.y = y;
         this.bombCount = 1;
+        this.range = 1;
+        this.life = 0;
     }
+
 
     drawBomberman() {
         canvasContext.fillStyle = playerColor;
@@ -42,6 +45,25 @@ class Bomberman {
         }
       }
       
+      takeObject(){
+        switch (map[this.y][this.x]){
+          case 5:           // take flame
+          map[this.y][this.x] = 0;
+          this.range += 1;
+          break;
+
+          case 6:           // take roller
+          map[this.y][this.x] = 0;
+          //speedtodo
+          break;
+
+          case 7:           // take bomb
+          map[this.y][this.x] = 0;
+          this.bombCount += 1;
+          break;
+        }
+
+      }
 
     placeBomb() {
         if (this.bombCount > 0) {
