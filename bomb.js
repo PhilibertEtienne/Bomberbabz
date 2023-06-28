@@ -18,43 +18,66 @@ class Bomb {
       );  
     };
     
-
     explode(bomberman) {
-      map[this.y][this.x] = 0; // Set the bomb position to empty/floor
+      map[this.y][this.x] = 0;
     
-      let explosionRange = bomberman.range; // Define the range of the explosion
+      let explosionRange = bomberman.range;
     
-      // Iterate over the cells in the explosion range
-      for (let i = -explosionRange; i <= explosionRange; i++) {
-        // Explode horizontally
-          if (this.x + i >= 0 && this.x + i < map[0].length) {
-            if (map[this.y][this.x + i] === 1) {
-                map[this.y][this.x + i] = 0;
-              if (Math.random()<0.3){
-                map[this.y][this.x + i] = 0
-              }
-            }
+      // Explode horizontally
+      for (let i = 1; i <= explosionRange; i++) {
+        if (this.x + i < map[0].length && map[this.y][this.x + i] !== 2 && map[this.y][this.x + i]!== 0) {
+          map[this.y][this.x + i] = 0;
+          if (Math.random() < 0.3) {
+            map[this.y][this.x + i] = Math.floor(Math.random() * 3) + 5;
           }
-        
-        // Explode vertically
-        if (this.y + i >= 0 && this.y + i < map.length) {
-          if (map[this.y + i][this.x] === 1) {
-            map[this.y + i][this.x] = Math.floor(Math.random() * (8 - 5 + 1)) + 5;
-          }
+        } else {
+          break;
         }
       }
-        // Check if bomberman explodes
-
-        if ((this.x + explosionRange >= bomberman.x && this.y === bomberman.y)||(this.x - explosionRange >= this.x && this.y === bomberman.y)) {
-          clearInterval(gameInterval); 
-          resetGame(); 
+    
+      for (let i = 1; i <= explosionRange; i++) {
+        if (this.x - i >= 0 && map[this.y][this.x - i] !== 2 && map[this.y][this.x - i]!== 0) {
+          map[this.y][this.x - i] = 0;
+          if (Math.random() < 0.3) {
+            map[this.y][this.x - i] = Math.floor(Math.random() * 3) + 5;
+          }
+        } else {
+          break;
         }
-
-        if ((this.y + explosionRange >= bomberman.y && this.x === bomberman.x)||(this.y - explosionRange >= this.y && this.x === bomberman.x)) {
-          clearInterval(gameInterval); 
-          resetGame(); 
-      }    
+      }
+    
+      // Explode vertically
+      for (let j = 1; j <= explosionRange; j++) {
+        if (this.y + j < map.length && map[this.y + j][this.x] !== 2 && map[this.y + j][this.x]!== 0) {
+          map[this.y + j][this.x] = 0;
+          if (Math.random() < 0.3) {
+            map[this.y + j][this.x] = Math.floor(Math.random() * 3) + 5;
+          }
+        } else {
+          break;
+        }
+      }
+    
+      for (let j = 1; j <= explosionRange; j++) {
+        if (this.y - j >= 0 && map[this.y - j][this.x] !== 2 && map[this.y - j][this.x]!== 0) {
+          map[this.y - j][this.x] = 0;
+          if (Math.random() < 0.3) {
+            map[this.y - j][this.x] = Math.floor(Math.random() * 3) + 5;
+          }
+        } else {
+          break;
+        }
+      }
+    
+      // Check if bomberman explodes
+      if (
+        (bomberman.x >= this.x - explosionRange && bomberman.x <= this.x + explosionRange && bomberman.y === this.y) ||
+        (bomberman.y >= this.y - explosionRange && bomberman.y <= this.y + explosionRange && bomberman.x === this.x)
+      ) {
+        clearInterval(gameInterval);
+        resetGame();
+      }
+    
       // Redraw the walls and bombs after an explosion
       drawWalls();
-    }
-  }
+    }}

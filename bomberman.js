@@ -5,6 +5,7 @@ class Bomberman {
         this.bombCount = 1;
         this.range = 1;
         this.life = 0;
+        this.direction = DIRECTION_RIGHT;
     }
 
 
@@ -25,21 +26,25 @@ class Bomberman {
           case DIRECTION_RIGHT:
             if (this.x + 1 < map[0].length && moveAble.includes(map[this.y][this.x + 1])) {
               this.x += 1;
-            }
+              this.takeObject();
+            }            
             break;
           case DIRECTION_UP:
             if (this.y - 1 >= 0 && moveAble.includes(map[this.y - 1][this.x])) {
               this.y -= 1;
+              this.takeObject();
             }
             break;
           case DIRECTION_LEFT:
             if (this.x - 1 >= 0 && moveAble.includes(map[this.y][this.x - 1])) {
               this.x -= 1;
+              this.takeObject();
             }
             break;
           case DIRECTION_DOWN:
             if (this.y + 1 < map.length && moveAble.includes(map[this.y + 1][this.x])) {
               this.y += 1;
+              this.takeObject();
             }
             break;
         }

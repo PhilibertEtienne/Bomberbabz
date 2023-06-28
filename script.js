@@ -19,6 +19,7 @@
   let moreBombColor ='#2f2f91'
   let moreSpeedColor ='#f7df23'
   let bomberman
+  let bombs = []; // Array to store active bombs
 
   const DIRECTION_RIGHT = 4;
   const DIRECTION_UP = 3;
@@ -56,7 +57,7 @@ let drawWalls = () => {
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, flameColor);
       }
         else if (map[i][j] === 6) {
-        // Draw Bomb
+        // Draw Bomb+
         createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreBombColor);
       }
        else if (map[i][j] === 7) {
@@ -92,6 +93,7 @@ let drawWalls = () => {
         bomberman.direction = DIRECTION_RIGHT;
         break;
       case " ":
+        event.preventDefault();
         bomberman.placeBomb();
         break;
       default:
@@ -100,12 +102,10 @@ let drawWalls = () => {
     
     // Call the move function to update the Bomberman's position
     bomberman.move();
-    bomberman.takeObject();
     // Call the draw function to update the display
     draw();
   }
   
-    // Call the draw function to update the display
 
   document.addEventListener("keydown", handleKeyDown);
 
@@ -118,7 +118,7 @@ let drawWalls = () => {
 
     let gameOver = () => {
       if ((bomberman.life == 0)){
-
+//todo
       }
     }
   let update =()=>{
@@ -137,10 +137,6 @@ let drawWalls = () => {
   
 
 
-  let gameInterval = setInterval(gameLoop,1000/fps)
-  
-  let bombs = []; // Array to store active bombs
-
   function updateBombs() {
     for (let i = 0; i < bombs.length; i++) {
       const bomb = bombs[i];
@@ -150,11 +146,12 @@ let drawWalls = () => {
         bomb.explode(bomberman);
         bombs.splice(i, 1);
         i--;
-      // Restore bomb count
-      bomberman.bombCount += 1;
-        }
+        // Restore bomb count
+        bomberman.bombCount += 1;
       }
     }
+  }
+    let gameInterval = setInterval(gameLoop,1000/fps)
 
     function resetGame() {
       map = [ 
@@ -170,7 +167,8 @@ let drawWalls = () => {
       ];
       bomberman = new Bomberman (0,0);
       bomberman.range = 1;
-      bomberman.bombCount = 1;
+      bomberman.bombCount = 0;
       bombs =[];
-      let gameInterval = setInterval(gameLoop,1000/fps)
+      clearInterval(gameInterval);
+      gameInterval = setInterval(gameLoop,1000/fps)
     }
