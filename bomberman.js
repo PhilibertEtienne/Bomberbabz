@@ -10,13 +10,17 @@ class Bomberman {
 
 
     drawBomberman() {
+      if (this.direction == DIRECTION_RIGHT){
       canvasContext.drawImage(keurdroiteFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
-
+      }  
+      if( this.direction == DIRECTION_LEFT) {
+        canvasContext.drawImage(keurgaucheFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+      }
       }
       
     
       move() {
-        let moveAble = [0, 5, 6, 7];
+        let moveAble = [0, 5, 6];
         switch (this.direction) {
           case DIRECTION_RIGHT:
             if (this.x + 1 < map[0].length && moveAble.includes(map[this.y][this.x + 1])) {
@@ -52,12 +56,7 @@ class Bomberman {
           this.range += 1;
           break;
 
-          case 6:           // take roller
-          map[this.y][this.x] = 0;
-          //speedtodo
-          break;
-
-          case 7:           // take bomb
+          case 6:           // take bomb
           map[this.y][this.x] = 0;
           this.bombCount += 1;
           break;
@@ -73,3 +72,30 @@ class Bomberman {
         }
       }
 }
+
+
+
+/* Bomberman jumping animation 
+drawBomberman() {
+  // Calculate the vertical position for jumping animation
+  const jumpOffset = Math.sin(Date.now() * 0.005) * 5; // Adjust the amplitude and speed of the jump
+
+  if (this.direction == DIRECTION_RIGHT) {
+    canvasContext.drawImage(
+      keurdroiteFrames, 
+      this.x * oneBlockSize, 
+      (this.y * oneBlockSize) + jumpOffset, // Apply the jump offset to the vertical position
+      oneBlockSize, 
+      oneBlockSize
+    );
+  } else if (this.direction == DIRECTION_LEFT) {
+    canvasContext.drawImage(
+      keurgaucheFrames, 
+      this.x * oneBlockSize, 
+      (this.y * oneBlockSize) + jumpOffset, // Apply the jump offset to the vertical position
+      oneBlockSize, 
+      oneBlockSize
+    );
+  }
+}
+*/
