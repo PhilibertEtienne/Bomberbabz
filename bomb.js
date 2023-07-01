@@ -6,16 +6,7 @@ class Bomb {
   }
 
   drawBomb = () => {
-      // Set the color to black
-      canvasContext.fillStyle = "black";
-      
-      // Fill the rectangle with black color at the bomb's position
-      canvasContext.fillRect(
-        this.x * oneBlockSize,
-        this.y * oneBlockSize,
-        oneBlockSize,
-        oneBlockSize
-      );  
+    canvasContext.drawImage(blocMouFrames, this.y * oneBlockSize, this.x * oneBlockSize, oneBlockSize, oneBlockSize);
     };
     
     explode(bomberman) {

@@ -1,8 +1,98 @@
-  const canvas = document.getElementById("canvas");
-  const canvasContext = canvas.getContext("2d");
-  const bombermanFrames = document.getElementById("bomberman")
-  const softBlockFrames = document.getElementById("softBlock")
-  const hardBlockFrames = document.getElementById("hardBlock")
+const canvasContext = canvas.getContext("2d");
+
+const images = [
+  { id: 'bomberman', src: 'Images/bomberman.png' },
+  { id: 'softBlock', src: 'Images/softBlock.png' },
+  { id: 'bombePosee', src: 'Images/bombe-posee.png' },
+  { id: 'boom', src: 'Images/boom.png' },
+  { id: 'floor', src: 'Images/case-vide-fond.png' },
+  { id: 'keurdroite', src: 'Images/keurdroite.png' },
+  { id: 'keurgauche', src: 'Images/keurgauche.png' },
+  { id: 'objetBombe', src: 'Images/objet-bombe.png' },
+  { id: 'objetFlamme', src: 'Images/objet-flamme.png' },
+  { id: 'blocDur', src: 'Images/bloc-dur.png' },
+  { id: 'blocMou', src: 'Images/bloc-mou.png' },
+  { id: 'blocboomFrames', src: 'Images/bloc-boom.jpg' }
+];
+
+  const imagePromises = images.map((imageInfo) => {
+    const img = new Image();
+    img.src = imageInfo.src;
+  
+    return new Promise((resolve) => {
+      img.onload = () => {
+        // Image loaded successfully
+        resolve({ id: imageInfo.id, img });
+      };
+    });
+  });
+  Promise.all(imagePromises)
+  .then((loadedImages) => {
+    // All images have been loaded successfully
+    const loadedImagesMap = Object.fromEntries(loadedImages.map(({ id, img }) => [id, img]));
+
+    // Now you can use the loaded images as needed (e.g., drawing on the canvas)
+    const bombermanFrames = loadedImagesMap.bomberman;
+    const softBlockFrames = loadedImagesMap.softBlock;
+    const bombePoseeFrames = loadedImagesMap.bombePosee;
+    const boomFrames = loadedImagesMap.boom;
+    const caseVideFond = loadedImagesMap.floor;
+    const keurdroite = loadedImagesMap.keurdroite;
+    const keurgauche = loadedImagesMap.keurgauche;
+    const objetBombe = loadedImagesMap.objetBombe;
+    const objetFlamme = loadedImagesMap.objetFlamme;
+    const blocDur = loadedImagesMap.blocDur;
+    const blocMou = loadedImagesMap.blocMou;
+    const blocBoomFrames = loadedImagesMap.blocboomFrames;
+
+    // Call other functions that depend on loaded images or start your game loop
+  
+    let drawWalls = () => {
+      for (let i = 0; i < map.length; i++) {
+        for (let j = 0; j < map[i].length; j++) {
+          if (map[i][j] === 2) {
+            // Draw hard block
+            canvasContext.drawImage(blocDur, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+          } else if (map[i][j] === 1) {
+            // Draw soft block
+            canvasContext.drawImage(blocMou, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+          } else if (map[i][j] === 0) {
+            // Draw floor
+            canvasContext.drawImage(caseVideFond, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+          }
+           else if (map[i][j] === 5) {
+            // Draw flame
+            canvasContext.drawImage(objetFlamme, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+          }
+            else if (map[i][j] === 6) {
+            // Draw Bomb+
+            canvasContext.drawImage(objetBombe, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+          }
+           else if (map[i][j] === 7) {
+            // Draw Speed
+            createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreSpeedColor);
+          }
+        }
+      }
+      // Draw bombs
+      for (let i = 0; i < bombs.length; i++) {
+        const bomb = bombs[i];
+        bomb.drawBomb();
+      }
+    };
+
+    // Call other functions that depend on loaded images or start your game loop
+    let gameLoop =() => {
+      update()
+      updateBombs();
+      draw()
+    }
+    gameLoop();
+  })
+  .catch((error) => {
+    // Handle error while loading images
+    console.error('Error loading images:', error);
+  });
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
@@ -39,42 +129,6 @@
       [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
 ]
 
-let drawWalls = () => {
-  for (let i = 0; i < map.length; i++) {
-    for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] === 2) {
-        // Draw hard block
-        canvasContext.drawImage(hardBlockFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
-      } else if (map[i][j] === 1) {
-        // Draw soft block
-        canvasContext.drawImage(softBlockFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
-      } else if (map[i][j] === 0) {
-        // Draw floor
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, floorColor);
-      }
-       else if (map[i][j] === 5) {
-        // Draw flame
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, flameColor);
-      }
-        else if (map[i][j] === 6) {
-        // Draw Bomb+
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreBombColor);
-      }
-       else if (map[i][j] === 7) {
-        // Draw Speed
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreSpeedColor);
-      }
-    }
-  }
-  // Draw bombs
-  for (let i = 0; i < bombs.length; i++) {
-    const bomb = bombs[i];
-    bomb.drawBomb();
-  }
-};
-
-
-
 // COMMANDS CONFIGURATION
   function handleKeyDown(event) {
     const key = event.key;
@@ -97,7 +151,7 @@ let drawWalls = () => {
         bomberman.placeBomb();
         break;
       default:
-        return;
+        return; 
     }
     
     // Call the move function to update the Bomberman's position
@@ -107,68 +161,3 @@ let drawWalls = () => {
   }
   
 
-  document.addEventListener("keydown", handleKeyDown);
-
-  let gameLoop =() => {
-    update()
-    updateBombs();
-    draw()
-  }
-
-
-    let gameOver = () => {
-      if ((bomberman.life == 0)){
-//todo
-      }
-    }
-  let update =()=>{
-    //todo
-  }
-
-  let draw = () => {
-    if (!bomberman) {
-      bomberman = new Bomberman(0,0);
-    }
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
-    // createRect(0, 0, canvas.width, canvas.height, "black");
-    drawWalls();
-    bomberman.drawBomberman();
-  };
-  
-
-
-  function updateBombs() {
-    for (let i = 0; i < bombs.length; i++) {
-      const bomb = bombs[i];
-      bomb.timer -= 1 / fps;
-  
-      if (bomb.timer <= 0) {
-        bomb.explode(bomberman);
-        bombs.splice(i, 1);
-        i--;
-        // Restore bomb count
-        bomberman.bombCount += 1;
-      }
-    }
-  }
-    let gameInterval = setInterval(gameLoop,1000/fps)
-
-    function resetGame() {
-      map = [ 
-        [0,0,1,0,1,1,0,0,0,1,1,1,1,0,0],
-        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
-        [1,1,1,1,0,1,1,1,1,1,1,0,0,1,1],
-        [1,2,1,2,0,2,1,2,1,2,1,2,1,2,1],
-        [1,1,1,1,1,1,0,0,0,1,1,1,1,0,0],
-        [1,2,1,2,1,2,1,2,1,2,0,2,1,2,1],
-        [1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
-        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
-        [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
-      ];
-      bomberman = new Bomberman (0,0);
-      bomberman.range = 1;
-      bomberman.bombCount = 0;
-      bombs =[];
-      clearInterval(gameInterval);
-      gameInterval = setInterval(gameLoop,1000/fps)
-    }
