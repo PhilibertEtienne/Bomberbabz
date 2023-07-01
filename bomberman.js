@@ -10,13 +10,8 @@ class Bomberman {
 
 
     drawBomberman() {
-        canvasContext.fillStyle = playerColor;
-        canvasContext.fillRect(
-          this.x * oneBlockSize,
-          this.y * oneBlockSize,
-          oneBlockSize,
-          oneBlockSize
-        );
+      canvasContext.drawImage(keurdroiteFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+
       }
       
     

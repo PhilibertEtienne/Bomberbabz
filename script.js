@@ -3,6 +3,14 @@
   const bombermanFrames = document.getElementById("bomberman")
   const softBlockFrames = document.getElementById("softBlock")
   const hardBlockFrames = document.getElementById("hardBlock")
+  const objetBombFrames = document.getElementById("objetBombe")
+  const objetFlammeFrames = document.getElementById("objetFlamme")
+  const blocDurFrames = document.getElementById("blocDur")
+  const blocMouFrames = document.getElementById("blocMou")
+  const floorFrames = document.getElementById("floor")
+  const keurdroiteFrames = document.getElementById("keurdroite")
+  const keurgaucheFrames = document.getElementById("keurgauche")
+  const bombePoseeFrames = document.getElementById("bombePosee")
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
@@ -44,25 +52,21 @@ let drawWalls = () => {
     for (let j = 0; j < map[i].length; j++) {
       if (map[i][j] === 2) {
         // Draw hard block
-        canvasContext.drawImage(hardBlockFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+        canvasContext.drawImage(blocDurFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       } else if (map[i][j] === 1) {
         // Draw soft block
-        canvasContext.drawImage(softBlockFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+        canvasContext.drawImage(blocMouFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       } else if (map[i][j] === 0) {
         // Draw floor
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, floorColor);
+        canvasContext.drawImage(floorFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
        else if (map[i][j] === 5) {
         // Draw flame
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, flameColor);
+        canvasContext.drawImage(objetFlammeFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
         else if (map[i][j] === 6) {
         // Draw Bomb+
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreBombColor);
-      }
-       else if (map[i][j] === 7) {
-        // Draw Speed
-        createRect(j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize, moreSpeedColor);
+        canvasContext.drawImage(objetBombFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
     }
   }
