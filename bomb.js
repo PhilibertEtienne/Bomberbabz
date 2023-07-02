@@ -6,7 +6,7 @@ class Bomb {
   }
 
   drawBomb = () => {
-    // Animation boom
+    // Blockboom animation
     if (this.timer <= 0.2) {
       canvasContext.drawImage(boomFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
       let explosionRange = bomberman.range;
@@ -15,7 +15,7 @@ class Bomb {
       let breakVerticalPlus = false; 
       let breakVerticalMoins = false; 
 
-      // Animation explosion block horizontal +
+      // Explosion animation horizontal +
       for (let i = 1; i <= explosionRange; i++) {
         if (this.x + i < map[this.y].length) {
           if (map[this.y][this.x + i] == 1 || map[this.y][this.x + i] == 2 ) {
@@ -35,7 +35,7 @@ class Bomb {
           }
         }
       }
-      // Animation explosion block horizontal -
+      // Explosion animation horizontal -
       for (let i = 1; i <= explosionRange; i++) {
         if (this.x - i < map[this.y].length) {
           if (map[this.y][this.x - i] == 1 || map[this.y][this.x - i] == 2 ) {
@@ -55,7 +55,7 @@ class Bomb {
           }
         }
       }
-      // Animation explosion block vertical +
+      // Explosion animation vertical +
       for (let j = 1; j <= explosionRange; j++) {
         if (this.y + j < map.length) {
           if (map[this.y + j][this.x] == 1 || map[this.y + j][this.x] == 2 ) {
@@ -75,7 +75,7 @@ class Bomb {
           }
         }
       }
-      // Animation explosion block vertical -
+      // Explosion animation vertical -
       for (let j = 1; j <= explosionRange; j++) {
         if (this.y - j >= 0) {
           if (map[this.y - j][this.x] == 1 || map[this.y - j][this.x] == 2) {
@@ -91,26 +91,6 @@ class Bomb {
           }
         }
       }
-      // // Animation explosion block vertical -
-      // for (let j = 1; j <= explosionRange; j++) {
-      //   if (this.y - j < map.length) {
-      //     if (map[this.y - j][this.x] == 1 || map[this.y - j][this.x] == 2 ) {
-      //       if (map[this.y - j][this.x] == 2){
-      //         breakVerticalMoins = true;
-      //         break;
-      //       }
-      //       if (breakVerticalMoins) {
-      //         break;
-      //       }
-      //       else {   
-      //         if (map[this.y - j][this.x] == 1){
-      //         canvasContext.drawImage(blocBoomFrames, this.x * oneBlockSize, (this.y - j) * oneBlockSize, oneBlockSize, oneBlockSize);
-      //         breakVerticalMoins = true;         
-      //         }       
-      //       } 
-      //     }
-      //   }
-      // }
     }
     else {
       canvasContext.drawImage(bombePoseeFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
@@ -119,7 +99,6 @@ class Bomb {
 
   explode(bomberman) {
     map[this.y][this.x] = 0;
-  
     let explosionRange = bomberman.range;
   
     // Explode horizontally
@@ -129,7 +108,7 @@ class Bomb {
         if (Math.random() < 0.3) {
           map[this.y][this.x + i] = Math.floor(Math.random() * 2) + 3;
         } else {
-          break; // stop iteration if a block is exploded
+          break; 
         }
       } else {
         break;
@@ -142,7 +121,7 @@ class Bomb {
         if (Math.random() < 0.3) {
           map[this.y][this.x - i] = Math.floor(Math.random() * 2) + 3;
         } else {
-          break; // stop iteration if a block is exploded
+          break; 
         }
       } else {
         break;
@@ -156,7 +135,7 @@ class Bomb {
         if (Math.random() < 0.3) {
           map[this.y + j][this.x] = Math.floor(Math.random() * 2) + 3;
         } else {
-          break; // stop iteration if a block is exploded
+          break; 
         }
       } else {
         break;
@@ -169,7 +148,7 @@ class Bomb {
         if (Math.random() < 0.3) {
           map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3;
         } else {
-          break; // stop iteration if a block is exploded
+          break; 
         }
       } else {
         break;
@@ -177,14 +156,29 @@ class Bomb {
     }
   
     // Check if bomberman explodes
-    if (
-      (bomberman.x >= this.x - explosionRange && bomberman.x <= this.x + explosionRange && bomberman.y === this.y) ||
-      (bomberman.y >= this.y - explosionRange && bomberman.y <= this.y + explosionRange && bomberman.x === this.x)
-    ) {
-      clearInterval(gameInterval);
-      resetGame();
-    }
-  
-    // Redraw the walls and bombs after an explosion
-    drawWalls();
-  }}
+
+      if (bomberman.x == this.x){
+        for (let i = 0; i <= explosionRange; i++) {
+          if (map[this.y][this.x + i] === 2 || map[this.y][this.x + i] === 1){
+            break;
+          }
+          else {
+            clearInterval(gameInterval);
+            resetGame();
+          }
+        }
+      }
+      if (bomberman.y == this.y){
+        for (let i = 0; i <= explosionRange; i++) {
+          if (map[this.y + i][this.x] === 2 || map[this.y + i][this.x ] === 1){
+            break;
+          }
+          else {
+            clearInterval(gameInterval);
+            resetGame();
+          }
+        }
+      }
+      drawWalls();
+  }
+}
