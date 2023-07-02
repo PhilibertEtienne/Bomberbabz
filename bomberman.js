@@ -6,21 +6,31 @@ class Bomberman {
         this.range = 1;
         this.life = 0;
         this.direction = DIRECTION_RIGHT;
+        this.previousHorizontalDirection = DIRECTION_RIGHT;
     }
 
 
     drawBomberman() {
       if (this.direction == DIRECTION_RIGHT){
       canvasContext.drawImage(keurdroiteFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+      this.previousHorizontalDirection = this.direction;
       }  
       if( this.direction == DIRECTION_LEFT) {
         canvasContext.drawImage(keurgaucheFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+        this.previousHorizontalDirection = this.direction;
       }
+      else {
+        if (this.previousHorizontalDirection == DIRECTION_RIGHT){
+          canvasContext.drawImage(keurdroiteFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+      }
+      if (this.previousHorizontalDirection == DIRECTION_LEFT){
+        canvasContext.drawImage(keurgaucheFrames, this.x * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+    }
       }
       
-    
+    }
       move() {
-        let moveAble = [0, 5, 6];
+        let moveAble = [0, 3, 4];
         switch (this.direction) {
           case DIRECTION_RIGHT:
             if (this.x + 1 < map[0].length && moveAble.includes(map[this.y][this.x + 1])) {
@@ -51,12 +61,12 @@ class Bomberman {
       
       takeObject(){
         switch (map[this.y][this.x]){
-          case 5:           // take flame
+          case 3:           // take flame
           map[this.y][this.x] = 0;
           this.range += 1;
           break;
 
-          case 6:           // take bomb
+          case 4:           // take bomb
           map[this.y][this.x] = 0;
           this.bombCount += 1;
           break;

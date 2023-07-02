@@ -11,6 +11,8 @@
   const keurdroiteFrames = document.getElementById("keurdroite")
   const keurgaucheFrames = document.getElementById("keurgauche")
   const bombePoseeFrames = document.getElementById("bombePosee")
+  const boomFrames = document.getElementById("boom")
+  const blocBoomFrames = document.getElementById("blocBoom")
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
@@ -60,11 +62,11 @@ let drawWalls = () => {
         // Draw floor
         canvasContext.drawImage(floorFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
-       else if (map[i][j] === 5) {
+       else if (map[i][j] === 3) {
         // Draw flame
         canvasContext.drawImage(objetFlammeFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
-        else if (map[i][j] === 6) {
+        else if (map[i][j] === 4) {
         // Draw Bomb+
         canvasContext.drawImage(objetBombFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
