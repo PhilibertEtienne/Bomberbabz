@@ -155,30 +155,61 @@ class Bomb {
       }
     }
   
-    // Check if bomberman explodes
+    // Check if bomberman explodes vertically
+    if (bomberman.x === this.x) {
+      if (bomberman.y <= this.y) {
+        for (let i = 0; i <= explosionRange; i++) {
+          if (map[this.y - i][this.x] === 2 || map[this.y - i][this.x] === 1) {
+            break;
+          } else {
+            if (this.y - i === bomberman.y) {
+              clearInterval(gameInterval);
+              resetGame();
+            }
+          }
+        }
+      }
+      if (bomberman.y >= this.y) {
+        for (let i = 0; i <= explosionRange; i++) {
+          if (map[this.y + i][this.x] === 2 || map[this.y + i][this.x] === 1) {
+            break;
+          } else {
+            if (this.y + i === bomberman.y) {
+              clearInterval(gameInterval);
+              resetGame();
+            }
+          }
+        }
+      }
+    }
 
-      if (bomberman.x == this.x){
+    // Check if bomberman explodes horizontally
+    if (bomberman.y === this.y) {
+      if (bomberman.x <= this.x) {
         for (let i = 0; i <= explosionRange; i++) {
-          if (map[this.y][this.x + i] === 2 || map[this.y][this.x + i] === 1){
+          if (map[this.y][this.x - i] === 2 || map[this.y][this.x - i] === 1) {
             break;
-          }
-          else {
-            clearInterval(gameInterval);
-            resetGame();
+          } else {
+            if (this.x - i === bomberman.x) {
+              clearInterval(gameInterval);
+              resetGame();
+            }
           }
         }
       }
-      if (bomberman.y == this.y){
+      if (bomberman.x >= this.x) {
         for (let i = 0; i <= explosionRange; i++) {
-          if (map[this.y + i][this.x] === 2 || map[this.y + i][this.x ] === 1){
+          if (map[this.y][this.x + i] === 2 || map[this.y][this.x + i] === 1) {
             break;
-          }
-          else {
-            clearInterval(gameInterval);
-            resetGame();
+          } else {
+            if (this.x + i === bomberman.x) {
+              clearInterval(gameInterval);
+              resetGame();
+            }
           }
         }
       }
-      drawWalls();
-  }
+    }    
+    drawWalls()
+ }
 }
