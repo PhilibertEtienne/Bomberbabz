@@ -97,7 +97,7 @@ class Bomb {
     }
   }
 
-  explode(bomberman) {
+   explode(bomberman) {
     map[this.y][this.x] = 0;
     let explosionRange = bomberman.range;
   
@@ -164,7 +164,7 @@ class Bomb {
           } else {
             if (this.y - i === bomberman.y) {
               clearInterval(gameInterval);
-              resetGame();
+              gameRunning = false;
             }
           }
         }
@@ -176,7 +176,7 @@ class Bomb {
           } else {
             if (this.y + i === bomberman.y) {
               clearInterval(gameInterval);
-              resetGame();
+              gameRunning = false;
             }
           }
         }
@@ -192,7 +192,7 @@ class Bomb {
           } else {
             if (this.x - i === bomberman.x) {
               clearInterval(gameInterval);
-              resetGame();
+              gameRunning = false;
             }
           }
         }
@@ -204,7 +204,7 @@ class Bomb {
           } else {
             if (this.x + i === bomberman.x) {
               clearInterval(gameInterval);
-              resetGame();
+               gameRunning = false;
             }
           }
         }

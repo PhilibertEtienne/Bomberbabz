@@ -1,4 +1,5 @@
-  const canvas = document.getElementById("canvas");
+ // sprite initialization
+ const canvas = document.getElementById("canvas");
   const canvasContext = canvas.getContext("2d");
   const bombermanFrames = document.getElementById("bomberman")
   const softBlockFrames = document.getElementById("softBlock")
@@ -13,23 +14,20 @@
   const bombePoseeFrames = document.getElementById("bombePosee")
   const boomFrames = document.getElementById("boom")
   const blocBoomFrames = document.getElementById("blocBoom")
+  const gameOverFrames = document.getElementById("gameOver")
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
   canvasContext.fillRect(x,y,width,height)
   }
 
+  //map and game initialization
   let fps = 30;
   let oneBlockSize = 40;
-  let hardBlockColor = "#342DCA";
-  let floorColor = '#40e355';
-  let softBlockColor = '#8a6a37'
-  let playerColor ='#03a9fc'
-  let flameColor ='#e0020d'
-  let moreBombColor ='#2f2f91'
-  let moreSpeedColor ='#f7df23'
   let bomberman
   let bombs = []; // Array to store active bombs
+  let gameRunning = true;
+
 
   const DIRECTION_RIGHT = 4;
   const DIRECTION_UP = 3;
@@ -49,7 +47,10 @@
       [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
 ]
 
+
+// Map drawing
 let drawWalls = () => {
+  if (gameRunning){
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
       if (map[i][j] === 2) {
@@ -71,12 +72,17 @@ let drawWalls = () => {
         canvasContext.drawImage(objetBombFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
     }
-  }
+    }
+  
   // Draw bombs
   for (let i = 0; i < bombs.length; i++) {
     const bomb = bombs[i];
     bomb.drawBomb();
   }
+}
+else {
+  resetGame();
+}
 };
 
 
@@ -99,7 +105,6 @@ let drawWalls = () => {
         bomberman.direction = DIRECTION_RIGHT;
         break;
       case " ":
-        event.preventDefault();
         bomberman.placeBomb();
         break;
       default:
@@ -111,15 +116,17 @@ let drawWalls = () => {
     // Call the draw function to update the display
     draw();
   }
-  
 
   document.addEventListener("keydown", handleKeyDown);
 
-  let gameLoop =() => {
-    update()
-    updateBombs();
-    draw()
+  let gameLoop = () => {
+    if (gameRunning) {
+      update();
+      updateBombs();
+    }
+    draw();
   }
+  
 
 
     let gameOver = () => {
@@ -159,22 +166,28 @@ let drawWalls = () => {
   }
     let gameInterval = setInterval(gameLoop,1000/fps)
 
-    function resetGame() {
-      map = [ 
-        [0,0,1,0,1,1,0,0,0,1,1,1,1,0,0],
-        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
-        [1,1,1,1,0,1,1,1,1,1,1,0,0,1,1],
-        [1,2,1,2,0,2,1,2,1,2,1,2,1,2,1],
-        [1,1,1,1,1,1,0,0,0,1,1,1,1,0,0],
-        [1,2,1,2,1,2,1,2,1,2,0,2,1,2,1],
-        [1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
-        [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
-        [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
-      ];
-      bomberman = new Bomberman (0,0);
-      bomberman.range = 1;
-      bomberman.bombCount = 0;
-      bombs =[];
-      clearInterval(gameInterval);
-      gameInterval = setInterval(gameLoop,1000/fps)
+     function resetGame() {
+        let imageDisplayDuration = 2000;
+        canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+        canvasContext.drawImage(gameOverFrames, 0, 0, canvas.width, canvas.height);
+        setTimeout(() => {
+        map = [
+          [0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0],
+          [0, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0],
+          [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1],
+          [1, 2, 1, 2, 0, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1],
+          [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0],
+          [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0, 2, 1, 2, 1],
+          [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+          [0, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0],
+          [0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+        ];
+        bomberman = new Bomberman(0, 0);
+        bomberman.range = 1;
+        bomberman.bombCount = 0;
+        bombs = [];
+        clearInterval(gameInterval);
+        gameInterval = setInterval(gameLoop, 1000 / fps);
+        gameRunning = true;
+      }, imageDisplayDuration);
     }
