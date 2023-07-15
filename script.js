@@ -184,7 +184,7 @@ else {
         ];
         bomberman = new Bomberman(0, 0);
         bomberman.range = 1;
-        bomberman.bombCount = 0;
+        bomberman.bombCount = 1;
         bombs = [];
         clearInterval(gameInterval);
         gameInterval = setInterval(gameLoop, 1000 / fps);
