@@ -104,9 +104,13 @@ class Bomb {
     // Explode horizontally
     for (let i = 1; i <= explosionRange; i++) {
       if (this.x + i < map[0].length && map[this.y][this.x + i] !== 2 && map[this.y][this.x + i] !== 0) {
-        map[this.y][this.x + i] = 0;
-        if (Math.random() < 0.3) {
-          map[this.y][this.x + i] = Math.floor(Math.random() * 2) + 3;
+        if (map[this.y][this.x + i] !== 7 && map[this.y][this.x+i] !== 8) {
+          map[this.y][this.x + i] = 0;
+          if (Math.random() < 0.3) {
+            map[this.y][this.x + i] = Math.floor(Math.random() * 2) + 3;
+          }
+        } else if (map[this.y][this.x + i] == 7){
+          map[this.y][this.x + i] = 8
         } else {
           break; 
         }
@@ -117,9 +121,13 @@ class Bomb {
   
     for (let i = 1; i <= explosionRange; i++) {
       if (this.x - i >= 0 && map[this.y][this.x - i] !== 2 && map[this.y][this.x - i] !== 0) {
-        map[this.y][this.x - i] = 0;
-        if (Math.random() < 0.3) {
-          map[this.y][this.x - i] = Math.floor(Math.random() * 2) + 3;
+        if (map[this.y][this.x - i] !== 7 && map[this.y][this.x - i] !== 8){
+          map[this.y][this.x - i] = 0
+          if (Math.random() < 0.3) {
+            map[this.y][this.x - i] = Math.floor(Math.random() * 2) + 3
+        };
+        } else if (map[this.y][this.x - i] == 7) {
+            map[this.y][this.x + i] = 8
         } else {
           break; 
         }
@@ -131,10 +139,14 @@ class Bomb {
     // Explode vertically
     for (let j = 1; j <= explosionRange; j++) {
       if (this.y + j < map.length && map[this.y + j][this.x] !== 2 && map[this.y + j][this.x] !== 0) {
-        map[this.y + j][this.x] = 0;
-        if (Math.random() < 0.3) {
-          map[this.y + j][this.x] = Math.floor(Math.random() * 2) + 3;
-        } else {
+        if (map[this.y + j][this.x] !== 7 && map[this.y + j][this.x] !== 8){
+          map[this.y + j][this.x] = 0
+          if (Math.random() < 0.3) {
+            map[this.y + j][this.x] = Math.floor(Math.random() * 2) + 3;
+        } 
+      } else if (map[this.y + j][this.x] == 7){
+          map[this.y + j][this.x] = 8
+      } else {
           break; 
         }
       } else {
@@ -144,9 +156,13 @@ class Bomb {
   
     for (let j = 1; j <= explosionRange; j++) {
       if (this.y - j >= 0 && map[this.y - j][this.x] !== 2 && map[this.y - j][this.x] !== 0) {
-        map[this.y - j][this.x] = 0;
-        if (Math.random() < 0.3) {
-          map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3;
+        if (map[this.y - j][this.x] !== 7 && map[this.y - j][this.x] !== 8){
+          map[this.y - j][this.x] = 0
+          if (Math.random() < 0.3) {
+            map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3
+        }
+        } else if (map[this.y - j][this.x] == 7) {
+          map[this.y - j][this.x] = 8
         } else {
           break; 
         }

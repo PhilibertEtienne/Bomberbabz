@@ -4,7 +4,7 @@ class Bomberman {
       this.y = y;
       this.bombCount = 1;
       this.range = 1;
-      this.life = 0;
+      this.life = 1;
       this.direction = DIRECTION_RIGHT;
       this.previousHorizontalDirection = DIRECTION_RIGHT;
   }
@@ -30,7 +30,7 @@ class Bomberman {
   }
 
   move() {
-      let moveAble = [0, 3, 4];
+      let moveAble = [0, 3, 4, 8];
       switch (this.direction) {
           case DIRECTION_RIGHT:
               if (this.x + 1 < map[0].length && moveAble.includes(map[this.y][this.x + 1])) {
@@ -68,6 +68,9 @@ class Bomberman {
           case 4: // take bomb
               map[this.y][this.x] = 0;
               this.bombCount += 1;
+              break;
+          case 8: // Wins
+              win()
               break;
       }
   }
