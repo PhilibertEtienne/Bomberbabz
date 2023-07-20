@@ -12,9 +12,13 @@
   const keurdroiteFrames = document.getElementById("keurdroite")
   const keurgaucheFrames = document.getElementById("keurgauche")
   const bombePoseeFrames = document.getElementById("bombePosee")
+  const bombetiersFrames = document.getElementById("bombetiers")
+  const bombe2tiersFrames = document.getElementById("bombe2tiers")
   const boomFrames = document.getElementById("boom")
   const blocBoomFrames = document.getElementById("blocBoom")
   const gameOverFrames = document.getElementById("gameOver")
+  const winFrames = document.getElementById("win")
+  const winScreen = document.getElementById("winScreen")
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
@@ -25,15 +29,11 @@
   let fps = 30;
   let oneBlockSize = 40;
   let bomberman
+  let isWin = false
   let bombs = []; // Array to store active bombs
   let gameRunning = true;
-
-
-  const DIRECTION_RIGHT = 4;
-  const DIRECTION_UP = 3;
-  const DIRECTION_LEFT = 2;
-  const DIRECTION_DOWN = 1;
-
+  let gameTime = 120; // 120 seconds = 2 minutes
+  let gameTimerInterval; // Interval to update the timer
 
   let map = [ 
       [0,0,1,0,1,1,0,0,0,1,1,1,1,0,0],
@@ -46,17 +46,39 @@
       [0,2,1,2,1,2,1,2,1,2,1,2,1,2,0],
       [0,0,1,0,1,1,1,1,1,1,1,1,1,0,0],
 ]
+function placeWinToken() {
+  // Get random line index from map
+  let randomLineIndex = Math.floor(Math.random() * map.length);
+  let randomLine = map[randomLineIndex];
 
+  // Get hardBlock index from the line
+  let positionsWithHardBlock = [];
+  for (let i = 0; i < randomLine.length; i++) {
+    if (randomLine[i] === 1) {
+      positionsWithHardBlock.push(i);
+    }
+  }
 
+  // Change a random hardBlock to the win token (7)
+  if (positionsWithHardBlock.length > 0) {
+    let randomIndex = Math.floor(Math.random() * positionsWithHardBlock.length);
+    let randomPositionIndex = positionsWithHardBlock[randomIndex];
+    map[randomLineIndex][randomPositionIndex] = 7;
+  }
+}
+
+placeWinToken();
+
+console.log(map);
 // Map drawing
 let drawWalls = () => {
-  if (gameRunning){
+  if (gameRunning && !isWin){
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
       if (map[i][j] === 2) {
         // Draw hard block
         canvasContext.drawImage(blocDurFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
-      } else if (map[i][j] === 1) {
+      } else if (map[i][j] === 1 || map[i][j] === 7) {
         // Draw soft block
         canvasContext.drawImage(blocMouFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       } else if (map[i][j] === 0) {
@@ -71,6 +93,10 @@ let drawWalls = () => {
         // Draw Bomb+
         canvasContext.drawImage(objetBombFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
+        else if (map[i][j] === 8) {
+        // Draw winToken
+        canvasContext.drawImage(winFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+      }
     }
     }
   
@@ -80,6 +106,9 @@ let drawWalls = () => {
     bomb.drawBomb();
   }
 }
+else if (isWin) {
+  win()
+}
 else {
   resetGame();
 }
@@ -88,6 +117,12 @@ else {
 
 
 // COMMANDS CONFIGURATION
+
+  const DIRECTION_RIGHT = 4;
+  const DIRECTION_UP = 3;
+  const DIRECTION_LEFT = 2;
+  const DIRECTION_DOWN = 1;
+
   function handleKeyDown(event) {
     const key = event.key;
   
@@ -119,23 +154,30 @@ else {
 
   document.addEventListener("keydown", handleKeyDown);
 
-  let gameLoop = () => {
-    if (gameRunning) {
-      update();
-      updateBombs();
+
+  // Timer initialization
+  function updateTimer() {
+    gameTime -= 1 / fps; // Decrement the timer by 1 second
+  
+    if (gameTime <= 0) {
+      gameRunning = false;
+      clearInterval(gameTimerInterval);
+      resetGame();
     }
-    draw();
+  
+    const minutes = Math.floor(gameTime / 60);
+    const seconds = Math.floor(gameTime % 60); // Round the seconds to the nearest integer
+    const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
+    // Replace "timerDisplay" with the ID of your HTML element to display the timer.
+    document.getElementById("timerDisplay").innerText = formattedTime;
   }
   
+  
+  // Start the timer interval when the game starts
+  gameTimerInterval = setInterval(updateTimer, 1000);
+  
 
-
-    let gameOver = () => {
-      if ((bomberman.life == 0)){
-//todo
-      }
-    }
   let update =()=>{
-    //todo
   }
 
   let draw = () => {
@@ -143,12 +185,24 @@ else {
       bomberman = new Bomberman(0,0);
     }
     canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
-    // createRect(0, 0, canvas.width, canvas.height, "black");
-    drawWalls();
+    drawWalls();  
     bomberman.drawBomberman();
   };
   
-
+  let gameLoop = () => {
+    if (gameRunning) {
+      update();
+      updateBombs();
+      updateTimer();
+  
+      if (gameTime <= 0) {
+        gameRunning = false;
+        clearInterval(gameTimerInterval);
+        resetGame();
+      }
+    }
+    draw();
+  }  
 
   function updateBombs() {
     for (let i = 0; i < bombs.length; i++) {
@@ -166,6 +220,14 @@ else {
   }
     let gameInterval = setInterval(gameLoop,1000/fps)
 
+
+    function win() { 
+      isWin = true;
+      gameRunning = false;
+      canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+      canvasContext.drawImage(winScreen, 0, 0, canvas.width, canvas.height);
+    }  
+
      function resetGame() {
         let imageDisplayDuration = 2000;
         canvasContext.clearRect(0, 0, canvas.width, canvas.height);
@@ -182,11 +244,14 @@ else {
           [0, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 0],
           [0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
         ];
+        placeWinToken();
         bomberman = new Bomberman(0, 0);
         bomberman.range = 1;
-        bomberman.bombCount = 0;
+        bomberman.bombCount = 1;
         bombs = [];
         clearInterval(gameInterval);
+        clearInterval(gameTimerInterval);
+          gameTime = 120; // 120 seconds = 2 minutes
         gameInterval = setInterval(gameLoop, 1000 / fps);
         gameRunning = true;
       }, imageDisplayDuration);
