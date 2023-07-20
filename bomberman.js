@@ -3,7 +3,7 @@ class Bomberman {
       this.x = x;
       this.y = y;
       this.bombCount = 1;
-      this.range = 1;
+      this.range = 3;
       this.life = 1;
       this.direction = DIRECTION_RIGHT;
       this.previousHorizontalDirection = DIRECTION_RIGHT;

@@ -12,6 +12,8 @@
   const keurdroiteFrames = document.getElementById("keurdroite")
   const keurgaucheFrames = document.getElementById("keurgauche")
   const bombePoseeFrames = document.getElementById("bombePosee")
+  const bombetiersFrames = document.getElementById("bombetiers")
+  const bombe2tiersFrames = document.getElementById("bombe2tiers")
   const boomFrames = document.getElementById("boom")
   const blocBoomFrames = document.getElementById("blocBoom")
   const gameOverFrames = document.getElementById("gameOver")
@@ -116,10 +118,10 @@ else {
 
 // COMMANDS CONFIGURATION
 
-const DIRECTION_RIGHT = 4;
-const DIRECTION_UP = 3;
-const DIRECTION_LEFT = 2;
-const DIRECTION_DOWN = 1;
+  const DIRECTION_RIGHT = 4;
+  const DIRECTION_UP = 3;
+  const DIRECTION_LEFT = 2;
+  const DIRECTION_DOWN = 1;
 
   function handleKeyDown(event) {
     const key = event.key;
@@ -155,7 +157,7 @@ const DIRECTION_DOWN = 1;
 
   // Timer initialization
   function updateTimer() {
-    gameTime -= 1/fps; // Decrement the timer by 1 second
+    gameTime -= 1 / fps; // Decrement the timer by 1 second
   
     if (gameTime <= 0) {
       gameRunning = false;
@@ -164,11 +166,12 @@ const DIRECTION_DOWN = 1;
     }
   
     const minutes = Math.floor(gameTime / 60);
-    const seconds = gameTime % 60;
-    const formattedTime = `${minutes}:${seconds.toString()}`;
+    const seconds = Math.floor(gameTime % 60); // Round the seconds to the nearest integer
+    const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
     // Replace "timerDisplay" with the ID of your HTML element to display the timer.
     document.getElementById("timerDisplay").innerText = formattedTime;
   }
+  
   
   // Start the timer interval when the game starts
   gameTimerInterval = setInterval(updateTimer, 1000);

@@ -2,26 +2,32 @@
 <html>
 <head>
   <title>Bomberbabz Game</title>
-
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="margin:0px; background-color: rgb(74, 71, 71)">
-  <div id="timerDisplay">2:00</div>
-  <canvas id="canvas" width="600" height="360"></canvas>
-    <div style="display:none">
-        <img src="ImagesKikiland/blocDur.jpg" alt="blocDur" id="blocDur">
-        <img src="ImagesKikiland/blocMou.jpg" alt="blocMou" id="blocMou">
-        <img src="ImagesKikiland/floor.jpg" alt="floor" id="floor">
-        <img src="ImagesKikiland/objetBombe.jpg" alt="objetBombe" id="objetBombe">
-        <img src="ImagesKikiland/objetFlamme.jpg" alt="objetFlamme" id="objetFlamme">
-        <img src="ImagesKikiland/keurdroite.jpg" alt="keurdroite" id="keurdroite">
-        <img src="ImagesKikiland/keurgauche.jpg" alt="keurgauche" id="keurgauche">
-        <img src="ImagesKikiland/bombePosee.jpg" alt="bombePosee" id="bombePosee">
-        <img src="ImagesKikiland/boom.jpg" alt="boom" id="boom">
-        <img src="ImagesKikiland/blocBoom.jpg" alt="blocBoom" id="blocBoom">
-        <img src="ImagesKikiland/gameOver.png" alt="gameOver" id="gameOver">
-        <img src="ImagesKikiland/win.png" alt="win" id="win">
-        <img src="ImagesKikiland/winScreen.png" alt="winScreen" id="winScreen">
+<body style="margin:0px; background-color: rgb(0, 0, 0)">
+  <div class="game-container">
+  <div id="timerDisplay" class="timerDisplay">2:00</div>
+  <div class="container">
+    <canvas id="canvas" width="600" height="360"></canvas>
+      <div style="display:none">
+          <img src="ImagesKikiland/blocDur.jpg" alt="blocDur" id="blocDur">
+          <img src="ImagesKikiland/blocMou.jpg" alt="blocMou" id="blocMou">
+          <img src="ImagesKikiland/floor.jpg" alt="floor" id="floor">
+          <img src="ImagesKikiland/objetBombe.jpg" alt="objetBombe" id="objetBombe">
+          <img src="ImagesKikiland/objetFlamme.jpg" alt="objetFlamme" id="objetFlamme">
+          <img src="ImagesKikiland/keurdroite.jpg" alt="keurdroite" id="keurdroite">
+          <img src="ImagesKikiland/keurgauche.jpg" alt="keurgauche" id="keurgauche">
+          <img src="ImagesKikiland/bombePosee.jpg" alt="bombePosee" id="bombePosee">
+          <img src="ImagesKikiland/bombetiers.png" alt="bombetiers" id="bombetiers">
+          <img src="ImagesKikiland/bombe2tiers.png" alt="bombe2tiers" id="bombe2tiers">
+          <img src="ImagesKikiland/boom.jpg" alt="boom" id="boom">
+          <img src="ImagesKikiland/blocBoom.jpg" alt="blocBoom" id="blocBoom">
+          <img src="ImagesKikiland/gameOver.png" alt="gameOver" id="gameOver">
+          <img src="ImagesKikiland/win.png" alt="win" id="win">
+          <img src="ImagesKikiland/winScreen.png" alt="winScreen" id="winScreen">
+      </div>
     </div>
+  </div>
   <script src="bomb.js"></script>
   <script src="bomberman.js"></script>
   <script src="script.js"></script>
