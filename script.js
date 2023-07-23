@@ -19,10 +19,10 @@
   const gameOverFrames = document.getElementById("gameOver")
   const winFrames = document.getElementById("win")
   const winScreen = document.getElementById("winScreen")
-  const rangeBas = document.getElementById("range-bas")
-  const rangeHaut = document.getElementById("range-haut")
-  const rangeDroite = document.getElementById("range-droite")
-  const rangeGauche = document.getElementById("range-gauche")
+  const rangeBas = document.getElementById("rangeBas")
+  const rangeHaut = document.getElementById("rangeHaut")
+  const rangeDroite = document.getElementById("rangeDroite")
+  const rangeGauche = document.getElementById("rangeGauche")
   const trophee = document.getElementById("trophee")
   const tropheewow = document.getElementById("tropheewow")
 
@@ -102,7 +102,7 @@ let drawWalls = () => {
       }
         else if (map[i][j] === 8) {
         // Draw winToken
-        canvasContext.drawImage(winFrames, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
+        canvasContext.drawImage(tropheewow, j * oneBlockSize, i * oneBlockSize, oneBlockSize, oneBlockSize);
       }
     }
     }
