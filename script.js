@@ -19,6 +19,12 @@
   const gameOverFrames = document.getElementById("gameOver")
   const winFrames = document.getElementById("win")
   const winScreen = document.getElementById("winScreen")
+  const rangeBas = document.getElementById("range-bas")
+  const rangeHaut = document.getElementById("range-haut")
+  const rangeDroite = document.getElementById("range-droite")
+  const rangeGauche = document.getElementById("range-gauche")
+  const trophee = document.getElementById("trophee")
+  const tropheewow = document.getElementById("tropheewow")
 
   let createRect = (x,y,width,height,color) => {
   canvasContext.fillStyle = color;
@@ -28,6 +34,7 @@
   //map and game initialization
   let fps = 30;
   let oneBlockSize = 40;
+  let opponent = true;
   let bomberman
   let isWin = false
   let bombs = []; // Array to store active bombs
@@ -142,12 +149,28 @@ else {
       case " ":
         bomberman.placeBomb();
         break;
+      case "z":
+        opponent.direction = DIRECTION_UP;
+        break;
+      case "s":
+        opponent.direction = DIRECTION_DOWN;
+        break;
+      case "q":
+        opponent.direction = DIRECTION_LEFT;
+        break;
+      case "d":   
+        opponent.direction = DIRECTION_RIGHT;
+        break;
+      case "r":
+        opponent.placeBomb();
+        break;
       default:
         return;
     }
     
     // Call the move function to update the Bomberman's position
     bomberman.move();
+    opponent.move();
     // Call the draw function to update the display
     draw();
   }
@@ -183,10 +206,14 @@ else {
   let draw = () => {
     if (!bomberman) {
       bomberman = new Bomberman(0,0);
+      if (opponent) {
+        opponent = new Bomberman(13,15)
+      }
     }
     canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
     drawWalls();  
     bomberman.drawBomberman();
+    opponent.drawBomberman();
   };
   
   let gameLoop = () => {
