@@ -209,7 +209,7 @@ class Bomb {
             map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3
           break
         } else {
-          map[this.y][this.x - i] = 0
+          map[this.y][this.x - j] = 0
           break
         }
         } else {
