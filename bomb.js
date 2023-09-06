@@ -15,7 +15,7 @@ class Bomb {
       let breakVerticalPlus = false; 
       let breakVerticalMoins = false; 
 
-      // Explosion animation horizontal +
+      // Explosion animation horizontal right
       for (let i = 1; i <= explosionRange; i++) {
         if (this.x + i < map[this.y].length) {
           if (map[this.y][this.x + i] == 1 || map[this.y][this.x + i] == 2 || map[this.y][this.x + i] == 7) {
@@ -33,9 +33,12 @@ class Bomb {
               }
             }
           }
+          else {
+              canvasContext.drawImage(rangeDroite, (this.x + i) * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
+          }
         }
       }
-      // Explosion animation horizontal -
+      // Explosion animation horizontal left
       for (let i = 1; i <= explosionRange; i++) {
         if (this.x - i < map[this.y].length) {
           if (map[this.y][this.x - i] == 1 || map[this.y][this.x - i] == 2 || map[this.y][this.x - i] == 7) {
@@ -53,9 +56,12 @@ class Bomb {
               }
             }
           }
+          else {
+            canvasContext.drawImage(rangeGauche,(this.x - i)  * oneBlockSize, this.y* oneBlockSize, oneBlockSize, oneBlockSize);
+        }
         }
       }
-      // Explosion animation vertical +
+      // Explosion animation vertical up
       for (let j = 1; j <= explosionRange; j++) {
         if (this.y + j < map.length) {
           if (map[this.y + j][this.x] == 1 || map[this.y + j][this.x] == 2 || map[this.y + j][this.x] == 7) {
@@ -73,9 +79,12 @@ class Bomb {
               }       
             } 
           }
+          else {
+            canvasContext.drawImage(rangeBas, this.x * oneBlockSize, (this.y + j) * oneBlockSize, oneBlockSize, oneBlockSize);
+        }
         }
       }
-      // Explosion animation vertical -
+      // Explosion animation vertical down
       for (let j = 1; j <= explosionRange; j++) {
         if (this.y - j >= 0) {
           if (map[this.y - j][this.x] == 1 || map[this.y - j][this.x] == 2 || map[this.y - j][this.x] == 7) {
@@ -88,6 +97,9 @@ class Bomb {
               breakVerticalMoins = true;         
               }       
             } 
+          }
+          else {
+            canvasContext.drawImage(rangeHaut, this.x * oneBlockSize, (this.y - j) * oneBlockSize, oneBlockSize, oneBlockSize);
           }
         }
       }
@@ -197,7 +209,7 @@ class Bomb {
             map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3
           break
         } else {
-          map[this.y][this.x - i] = 0
+          map[this.y][this.x - j] = 0
           break
         }
         } else {
