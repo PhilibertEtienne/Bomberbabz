@@ -57,7 +57,7 @@ function placeWinToken() {
   // Get random line index from map
   let minValue = 5;
   let randomLineIndex =
-    Math.floor(Math.random() * (map.length - minValue + 1)) + minValue;
+    Math.floor(Math.random() * (map.length - minValue)) + minValue;
   let randomLine = map[randomLineIndex];
 
   // Get hardBlock index from the line
