@@ -57,7 +57,7 @@ function placeWinToken() {
   // Get random line index from map
   let minValue = 5;
   let randomLineIndex =
-    Math.floor(Math.random() * (map.length - minValue + 1)) + minValue;
+    Math.floor(Math.random() * (map.length - minValue)) + minValue;
   let randomLine = map[randomLineIndex];
 
   // Get hardBlock index from the line
@@ -182,9 +182,8 @@ function handleKeyDown(event) {
       bomberman.placeBomb();
       bomberman.direction = null;
       break;
-
       default:
-        return;
+      return;
   }
 
   // Call the move function to update the Bomberman's position
@@ -226,6 +225,7 @@ let draw = () => {
   }
   canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
   drawWalls();
+  bomberman.drawBomberman();
 };
 
 let gameLoop = () => {
