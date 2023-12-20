@@ -50,7 +50,7 @@ class Bomb {
               break;
             }
             else {
-              if (map[this.y][this.x - i] == 1 || map[this.y][this.x + i] == 7){
+              if (map[this.y][this.x - i] == 1 || map[this.y][this.x - i] == 7){
               canvasContext.drawImage(blocBoomFrames, (this.x - i) * oneBlockSize, this.y * oneBlockSize, oneBlockSize, oneBlockSize);
               breakHorizontalMoins = true;
               }
@@ -92,7 +92,7 @@ class Bomb {
                   breakVerticalMoins = true;
                   break;
               }            else {   
-              if (map[this.y - j][this.x] == 1 || map[this.y][this.x + i] == 7){
+              if (map[this.y - j][this.x] == 1 || map[this.y][this.x - i] == 7){
               canvasContext.drawImage(blocBoomFrames, this.x * oneBlockSize, (this.y - j) * oneBlockSize, oneBlockSize, oneBlockSize);
               breakVerticalMoins = true;         
               }       
@@ -165,7 +165,7 @@ class Bomb {
           map[this.y][this.x - i] = 0
         }
         } else if (map[this.y][this.x - i] == 7) {
-            map[this.y][this.x + i] = 8
+            map[this.y][this.x - i] = 8
             break;
         } else {
           break; 
@@ -209,7 +209,7 @@ class Bomb {
             map[this.y - j][this.x] = Math.floor(Math.random() * 2) + 3
           break
         } else {
-          map[this.y][this.x - j] = 0
+          map[this.y - j][this.x] = 0;
           break
         }
         } else {

@@ -71,17 +71,19 @@ function placeWinToken() {
   // Change a random hardBlock to the win token (7)
   if (positionsWithHardBlock.length > 0) {
     let minValue = 6;
-    let randomIndex = Math.floor(Math.random() * (positionsWithHardBlock.length - minValue + 1)) + minValue;
-        let randomPositionIndex = positionsWithHardBlock[randomIndex];
+    let randomIndex =
+      Math.floor(
+        Math.random() * (positionsWithHardBlock.length - minValue + 1)
+      ) + minValue;
+    let randomPositionIndex = positionsWithHardBlock[randomIndex];
     map[randomLineIndex][randomPositionIndex] = 7;
   }
 }
 
 placeWinToken();
 
-console.log(map);
 // Map drawing
-let drawWalls = () => {
+function drawWalls() {
   if (gameRunning && !isWin) {
     for (let i = 0; i < map.length; i++) {
       for (let j = 0; j < map[i].length; j++) {
@@ -153,7 +155,7 @@ let drawWalls = () => {
   } else {
     resetGame();
   }
-};
+}
 
 // COMMANDS CONFIGURATION
 
@@ -182,7 +184,7 @@ function handleKeyDown(event) {
       bomberman.placeBomb();
       bomberman.direction = null;
       break;
-      default:
+    default:
       return;
   }
 
@@ -197,7 +199,7 @@ document.addEventListener("keydown", handleKeyDown);
 // Timer initialization
 function updateTimer() {
   gameTime -= 1 / fps; // Decrement the timer by 1 second
-  
+
   if (gameTime <= 0) {
     gameRunning = false;
     clearInterval(gameTimerInterval);
@@ -211,24 +213,29 @@ function updateTimer() {
   document.getElementById("timerDisplay").innerText = formattedTime;
 }
 
+function updateItems () {
+ let bombeText = document.querySelector(".bombeText");
+ let flammeText = document.querySelector(".flammeText");
+bombeText.textContent = bomberman.bombCount;
+flammeText.textContent = bomberman.range;
+}
+
 // Start the timer interval when the game starts
 gameTimerInterval = setInterval(updateTimer, 1000);
 
-let update = () => {};
+function update() {}
 
-let draw = () => {
+function draw() {
   if (!bomberman) {
     bomberman = new Bomberman(0, 0);
-    if (opponent) {
-      opponent = new Bomberman(13, 15);
-    }
   }
   canvasContext.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
   drawWalls();
   bomberman.drawBomberman();
-};
+  updateItems();
+}
 
-let gameLoop = () => {
+function gameLoop() {
   if (gameRunning) {
     update();
     updateBombs();
@@ -241,7 +248,7 @@ let gameLoop = () => {
     }
   }
   draw();
-};
+}
 
 function updateBombs() {
   for (let i = 0; i < bombs.length; i++) {
@@ -257,7 +264,19 @@ function updateBombs() {
     }
   }
 }
-let gameInterval = setInterval(gameLoop, 1000 / fps);
+let gameInterval;
+
+let instructions = document.getElementById("instrucDemarrage");
+let instructionsBottom = document.getElementById("moities-commandes");
+let currentItems = document.querySelector(".current-items");
+// let barreLaterale = document.getElementById("barreLaterale");
+setTimeout(() => {
+  instructions.style.display = "none";
+  instructionsBottom.style.display = "inline-block";
+  currentItems.style.display = "flex";
+  // barreLaterale.style.display = "inline-block";
+  gameInterval = setInterval(gameLoop, 1000 / fps);
+}, 10000);
 
 function win() {
   isWin = true;

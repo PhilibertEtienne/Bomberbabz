@@ -1,42 +1,126 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Bomberbabz Game</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body style="margin:0px; background-color: rgba(255, 187, 238, 0.883)">
-  <div class="game-container">
-  <div id="timerDisplay" class="timerDisplay">2:00</div>
-  <div class="container">
-    <canvas id="canvas" width="600" height="360"></canvas>
-      <div style="display:none">
-          <img src="ImagesKikiland/blocDur.jpg" alt="blocDur" id="blocDur">
-          <img src="ImagesKikiland/blocMou.jpg" alt="blocMou" id="blocMou">
-          <img src="ImagesKikiland/floor.jpg" alt="floor" id="floor">
-          <img src="ImagesKikiland/objetBombe.jpg" alt="objetBombe" id="objetBombe">
-          <img src="ImagesKikiland/objetFlamme.jpg" alt="objetFlamme" id="objetFlamme">
-          <img src="ImagesKikiland/keurdroite.jpg" alt="keurdroite" id="keurdroite">
-          <img src="ImagesKikiland/keurgauche.jpg" alt="keurgauche" id="keurgauche">
-          <img src="ImagesKikiland/bombePosee.jpg" alt="bombePosee" id="bombePosee">
-          <img src="ImagesKikiland/bombetiers.png" alt="bombetiers" id="bombetiers">
-          <img src="ImagesKikiland/bombe2tiers.png" alt="bombe2tiers" id="bombe2tiers">
-          <img src="ImagesKikiland/boom.jpg" alt="boom" id="boom">
-          <img src="ImagesKikiland/blocBoom.jpg" alt="blocBoom" id="blocBoom">
-          <img src="ImagesKikiland/gameOver.png" alt="gameOver" id="gameOver">
-          <img src="ImagesKikiland/win.png" alt="win" id="win">
-          <img src="ImagesKikiland/winScreen.png" alt="winScreen" id="winScreen">
-          <img src="ImagesKikiland/range-bas.jpg" alt="rangeBas" id="rangeBas">
-          <img src="ImagesKikiland/range-droite.jpg" alt="rangeDroite" id="rangeDroite">
-          <img src="ImagesKikiland/range-haut.jpg" alt="rangeHaut" id="rangeHaut">
-          <img src="ImagesKikiland/range-gauche.jpg" alt="rangeGauche" id="rangeGauche">
-          <img src="ImagesKikiland/trophee.jpg" alt="trophee" id="trophee">
-          <img src="ImagesKikiland/tropheewow.jpg" alt="tropheewow" id="tropheewow">
+  <head>
+    <title>Bomberbabz Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body style="margin: 0px; background-color: rgba(255, 187, 238, 0.883)">
+    <div class="game-container">
+      <div id="timerDisplay" class="timerDisplay">2:00</div>
+      <div class="container">
+        <canvas id="canvas" width="600" height="360"></canvas>
+        <div class="current-items" style="display: none">
+          <div class="item bombe">
+            <img
+              src="ImagesKikiland/objetBombe.jpg"
+              alt="objetBombe"
+              id="objetBombe"
+            /><span class="bombeText">1</span>
+          </div>
+          <div class="item flamme">
+            <img
+              src="ImagesKikiland/objetFlamme.jpg"
+              alt="objetFlamme"
+              id="objetFlamme"
+            /><span class="flammeText">1</span>
+          </div>
+        </div>
+        <img
+          src="ImagesKikiland/indic_ecran_demarrage-immobile.jpg"
+          alt="instrucDemarrage"
+          id="instrucDemarrage"
+        />
+        <img
+          src="ImagesKikiland/moitie-commandes.jpg"
+          alt="moities-commandes"
+          id="moities-commandes"
+          style="display: none"
+        />
+        <img
+          src="ImagesKikiland/moitie-indics-barre-laterale.jpg"
+          alt="barreLaterale"
+          id="barreLaterale"
+          style="display: none"
+        />
+        <div style="display: none">
+          <img src="ImagesKikiland/blocDur.jpg" alt="blocDur" id="blocDur" />
+          <img src="ImagesKikiland/blocMou.jpg" alt="blocMou" id="blocMou" />
+          <img src="ImagesKikiland/floor.jpg" alt="floor" id="floor" />
+          <img
+            src="ImagesKikiland/objetBombe.jpg"
+            alt="objetBombe"
+            id="objetBombe"
+          />
+          <img
+            src="ImagesKikiland/objetFlamme.jpg"
+            alt="objetFlamme"
+            id="objetFlamme"
+          />
+          <img
+            src="ImagesKikiland/keurdroite.jpg"
+            alt="keurdroite"
+            id="keurdroite"
+          />
+          <img
+            src="ImagesKikiland/keurgauche.jpg"
+            alt="keurgauche"
+            id="keurgauche"
+          />
+          <img
+            src="ImagesKikiland/bombePosee.jpg"
+            alt="bombePosee"
+            id="bombePosee"
+          />
+          <img
+            src="ImagesKikiland/bombetiers.png"
+            alt="bombetiers"
+            id="bombetiers"
+          />
+          <img
+            src="ImagesKikiland/bombe2tiers.png"
+            alt="bombe2tiers"
+            id="bombe2tiers"
+          />
+          <img src="ImagesKikiland/boom.jpg" alt="boom" id="boom" />
+          <img src="ImagesKikiland/blocBoom.jpg" alt="blocBoom" id="blocBoom" />
+          <img src="ImagesKikiland/gameOver.png" alt="gameOver" id="gameOver" />
+          <img src="ImagesKikiland/win.png" alt="win" id="win" />
+          <img
+            src="ImagesKikiland/winScreen.png"
+            alt="winScreen"
+            id="winScreen"
+          />
+          <img
+            src="ImagesKikiland/range-bas.jpg"
+            alt="rangeBas"
+            id="rangeBas"
+          />
+          <img
+            src="ImagesKikiland/range-droite.jpg"
+            alt="rangeDroite"
+            id="rangeDroite"
+          />
+          <img
+            src="ImagesKikiland/range-haut.jpg"
+            alt="rangeHaut"
+            id="rangeHaut"
+          />
+          <img
+            src="ImagesKikiland/range-gauche.jpg"
+            alt="rangeGauche"
+            id="rangeGauche"
+          />
+          <img src="ImagesKikiland/trophee.jpg" alt="trophee" id="trophee" />
+          <img
+            src="ImagesKikiland/tropheewow.jpg"
+            alt="tropheewow"
+            id="tropheewow"
+          />
+        </div>
       </div>
     </div>
-  </div>
-  <script src="bomb.js"></script>
-  <script src="bomberman.js"></script>
-  <script src="script.js"></script>
-
-</body>
+    <script src="bomb.js"></script>
+    <script src="bomberman.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

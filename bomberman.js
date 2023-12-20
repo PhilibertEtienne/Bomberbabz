@@ -82,4 +82,8 @@ class Bomberman {
           this.bombCount -= 1;
       }
   }
+
+  getProperties() {
+    return this.range + this.bombCount
+  }
 }

@@ -5,7 +5,6 @@
     justify-content: center;
     padding: 20px;
     border-radius: 10px;
-    /* background-color: white; */
     width: 600px;
 }
 
@@ -17,8 +16,46 @@
     justify-content: center;
 }
 
-.timerDisplay {
+* {
     font-weight: bolder;
-    color: rgb(255, 245, 46);
+    color: rgb(84, 46, 255);
     font-family: 'Arial Narrow Bold', sans-serif;
+}
+
+#instrucDemarrage{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 650px;
+}
+#moities-commandes{
+    width: 600px;
+}
+#barreLaterale{
+    height: 360px;
+    padding-right:300px;
+    margin-top:20px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.current-items {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding-left: 660px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 420px;
+}
+.item {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 5px;
 }
