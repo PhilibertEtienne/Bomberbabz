@@ -213,11 +213,11 @@ function updateTimer() {
   document.getElementById("timerDisplay").innerText = formattedTime;
 }
 
-function updateItems () {
- let bombeText = document.querySelector(".bombeText");
- let flammeText = document.querySelector(".flammeText");
-bombeText.textContent = bomberman.bombCount;
-flammeText.textContent = bomberman.range;
+function updateItems() {
+  let bombeText = document.querySelector(".bombeText");
+  let flammeText = document.querySelector(".flammeText");
+  bombeText.textContent = bomberman.bombCount;
+  flammeText.textContent = bomberman.range;
 }
 
 // Start the timer interval when the game starts
@@ -269,14 +269,12 @@ let gameInterval;
 let instructions = document.getElementById("instrucDemarrage");
 let instructionsBottom = document.getElementById("moities-commandes");
 let currentItems = document.querySelector(".current-items");
-// let barreLaterale = document.getElementById("barreLaterale");
 setTimeout(() => {
   instructions.style.display = "none";
   instructionsBottom.style.display = "inline-block";
   currentItems.style.display = "flex";
-  // barreLaterale.style.display = "inline-block";
   gameInterval = setInterval(gameLoop, 1000 / fps);
-}, 10000);
+}, 6000);
 
 function win() {
   isWin = true;
